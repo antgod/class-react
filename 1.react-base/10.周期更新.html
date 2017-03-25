@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+	<script type="text/babel">
+		var MessageBox = React.createClass({
+			getInitialState:function(){
+				return {
+					count: 0,
+				}
+			},
+			shouldComponentUpdate:function(nextProp,nextState){    //用来判断
+				console.log('shouldComponentUpdate');
+				if(nextState.count > 5) return false;
+				return true;
+			},
+			componentWillUpdate:function(nextProp,nextState){      //参数,更新后prop和state
+			    //ajax操作更新组件props，以便更新数据
+				console.log('componentWillUpdate');
+			},
+			componentDidUpdate:function(prevProps, prevState){     //参数,更新前prop和state
+				console.log('componentDidUpdate');
+			},
+			doUpdate:function(){
+				this.setState({
+					count: this.state.count + 1,
+				});
+			},
+			render:function(){	
+				console.log('渲染')
+				return ( 
+					<div>
+						<h1 > 计数： {this.state.count}</h1> 
+						<button onClick={this.doUpdate}>手动更新组件（包括子组件）</button>
+						<Submessage count={this.state.count}/>
+					</div>
+				)
+			}
+		});
+
+		var Submessage = React.createClass({
+			componentWillReceiveProps:function(nextProp){  //组件接受到新的props时候调用
+				console.log('子组件将要获得prop',this.props);
+				
+			},
+			shouldComponentUpdate:function(nextProp,nextState){
+				if(nextProp.count> 5) return false;
+				return true;
+			},
+			render:function(){
+				return (
+					<h3>当前计数是：{this.props.count}</h3>
+				)
+			}
+		});
+
+
+		var messageBox = React.render( <MessageBox/>, 
+			document.getElementById('app')
+		)
+
+
+	</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/babel">
+        var Page=React.createClass({
+            getInitialState:function(){
+                return {
+                    input:'input value',
+                    select:'A',
+                    radio:'B',
+                    checkbox:['C'],
+                    textarea:'textarea value'
+                }
+            },
+
+            submitHandler:function(e){
+                e.preventDefault();
+                var formData={
+                    //input:this.refs['input'].value,
+                    select:this.refs['select'].value,
+                    textarea:this.refs['textarea'].value,
+                    radio:this.state.radio
+                };
+
+                console.log(formData);
+                this.refs.radio.saySomething();
+            },
+
+            radioHander:function(e){
+                this.setState({
+                    radio:e.target.value
+                })
+            },
+
+            checkboxHander:function(e){
+                var value=e.target.value;
+                var checkbox=this.state.checkbox;
+                if(checkbox.indexOf(value)==-1){
+                    checkbox.push(value);
+                }else{
+                    checkbox.splice(checkbox.indexOf(value),1);
+                }
+
+                this.setState({
+                   checkbox:checkbox
+                })
+            },
+
+            render:function(){
+                return  (
+                    <form onSubmit={this.submitHandler} >
+                        <p>input</p>
+                        <input  ref={function(comp){React.findDOMNode(comp).focus();}}  type='text' defaultValue={this.state.input} />
+                        <p>select</p>
+                        <select ref='select' defaultValue={this.state.select}>
+                            <option value='A'>A</option>
+                            <option value='B'>B</option>
+                            <option value='C'>C</option>
+                        </select>
+                        <p>radio</p>
+                        <RadioButton radioHander={this.radioHander} ref="radio"/>
+                        <p>checkbox</p>
+                        <CheckboxButton checkboxHander={this.checkboxHander}/>
+                        <p>textarea</p>
+                        <textarea ref='textarea' defaultValue={this.state.textarea} /><br/>
+                        <button type="submit">提交</button>
+                    </form>
+                )
+            }
+        });
+
+        var RadioButton=React.createClass({
+            saySomething:function(){
+				alert("yo what's up man!");
+			},
+            render:function(){
+                return (
+                    <span>
+                        A:<input type='radio' name='radio' value='A' onChange={this.props.radioHander} />
+                        B:<input type='radio' name='radio' value='B' onChange={this.props.radioHander} defaultChecked/>
+                        C:<input type='radio' name='radio' value='C' onChange={this.props.radioHander} />
+                    </span>
+                )
+            }
+        });
+
+        var CheckboxButton=React.createClass({
+            render:function(){
+                return (
+                    <span>
+                        A:<input type='checkbox' value='A' onChange={this.props.checkboxHander}/>
+                        B:<input type='checkbox' value='B' onChange={this.props.checkboxHander}/>
+                        C:<input type='checkbox' value='C' onChange={this.props.checkboxHander} defaultChecked/>
+                    </span>
+                )
+            }
+        });
+
+        var page=ReactDOM.render(<Page />,document.getElementById("content"));
+
+    </script>
+</body>
+</html>

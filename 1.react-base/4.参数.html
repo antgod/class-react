@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+    <style>
+        .header{
+            text-align: center;
+            line-height: 60px;
+            background: #ccc;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/babel">
+           var Page=React.createClass({
+            getInitialState:function(){
+                return {
+                    isVisiable:"block",
+                    html:this.props.messages.title
+                }
+            },
+
+            render:function(){
+                var props=this.props.messages.messages,arrs=[];
+
+                for(var i=0;i<props.length;i++){
+                    arrs.push(<div>{props[i]}</div>);
+                }
+
+                return  (
+                    <div>
+                        <div className='header' style={{display:this.state.isVisiable}}>{this.state.html}</div>
+                        <div className='content' style={{marginTop:'60px'}}>{arrs}</div>
+                        <SubPage content={this.props.messages.footer} />
+                    </div>
+                )
+            }
+        })
+
+        var MyStyles = {
+            SubPage:{
+                lineHeight:'30px',
+                textAlign:'center',
+                background:'#ccc',
+                position:'fixed',
+                bottom:0,
+                left:0,
+                width:'100%'
+            }
+        };
+
+        var SubPage=  React.createClass({
+            propTypes:{
+                content:React.PropTypes.array.isRequired
+            },
+
+
+
+            getInitialState:function(){
+                return {
+                    html:'底部子内容'
+                }
+            },
+
+            handerClick:function(e){
+                this.setState({html:'底部子内容点击改变后'});
+            },
+
+            componentWillUpdate:function(){
+            },
+
+            render:function(){
+                return (
+                    <div style={MyStyles.SubPage}>
+                        <div>{this.state.html}</div>
+                        <div onClick={this.handerClick}>{this.props.content}，点击我试试</div>
+                    </div>
+                )
+            }
+        });
+
+        var messages={title:'标题内容',footer:'底部内容',messages:["内容1","内容2","内容3"]};
+
+        var page=ReactDOM.render(<Page messages={messages}/>,document.getElementById("content"));
+
+        setTimeout(function(){
+            page.setProps({messages:{title:'标题内容',footer:'底部内容改变后',messages:["内容3","内容2","内容1"]}})
+        },1000);
+
+    </script>
+</body>
+</html>

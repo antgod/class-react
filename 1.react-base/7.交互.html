@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/babel">
+        var Parent=React.createClass({
+            getInitialState:function(){
+                return {
+                    title:"父组件-点我"
+                }
+            },
+
+            change:function(e){
+                this.setState({
+                    title:"子组件点击改变父组件"
+                })
+            },
+
+            click:function(e){
+                this.refs.child.change();
+            },
+
+            render:function(){
+                return  (
+                    <span>
+                        <div onClick={this.click}>{this.state.title}</div>
+                        <Child ref='child' change={this.change}/>
+                    </span>
+                )
+            }
+        });
+
+        var Child=React.createClass({
+            getInitialState:function(){
+                return {
+                    title:"子组件-点我"
+                }
+            },
+
+            change:function(e){
+                this.setState({
+                    title:"父组件点击改变子组件"
+                })
+            },
+
+            render:function(){
+                return  (
+                    <div onClick={this.props.change}>{this.state.title}</div>
+                )
+            }
+        })
+
+        var page=ReactDOM.render(<Parent />,document.getElementById("content"));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "babel": "^6.5.2",
+    "react-hot": "^0.1.0",
+    "reactfire": "^0.6.0"
+  }
+}

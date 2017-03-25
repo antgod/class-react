@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+    <style>
+        .content{
+            margin-top:60px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/babel">
+       var Page=React.createClass({
+            render:function(){
+                var arrs=[];
+
+                for(var i=0;i<10;i++){
+                    arrs.push(<div>{i+1}</div>);
+                }
+
+                return  (
+                    <div>
+                        <HeaderPart />
+                        <div className={'content'}>{arrs}</div>
+                        <FooterPart />
+                    </div>
+                )
+            }
+        })
+
+        var MyStyles = {
+
+            Header:{
+                height:'60px',
+                background:'#ccc',
+                fontSize: "40px",
+                fontWeight: "bold",
+                position:'fixed',
+                top:0,
+                left:0,
+                width:'100%'
+            },
+
+            Footer:{
+                height:'60px',
+                background:'#ccc',
+                fontSize: "40px",
+                fontWeight: "bold",
+                position:'fixed',
+                bottom:0,
+                left:0,
+                width:'100%'
+            }
+        };
+
+        var HeaderPart=  React.createClass({
+            render:function(){
+                return (
+                    <div style={MyStyles.Header}>111</div>
+                )
+            }
+        });
+
+        var FooterPart=  React.createClass({
+            render:function(){
+                return (
+                    <div style={MyStyles.Footer}>222</div>
+                )
+            }
+        });
+
+        ReactDOM.render(<Page/>,document.getElementById("content"))
+
+    </script>
+</body>
+</html>

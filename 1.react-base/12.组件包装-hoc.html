@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Basic Example</title>
+</head>
+<body>
+<div id="container"></div>
+<script src="bower_components/build/react.js"></script>
+<script src="bower_components/build/react-dom.js"></script>
+<script src="bower_components/babel/browser.min.js"></script>
+<script type="text/babel">
+    var Child = React.createClass({
+        render() {
+            return <div> {this.props.datasoure} </div>;
+        }
+    });
+
+    var GruntParent=function(datasource){
+        return Component =>{
+            return React.createClass({
+                render(){
+                    return <Component datasoure={datasource}/>;
+                }
+            })
+        }
+    };
+
+    var P=GruntParent('test')(Child);
+
+    var start = new Date().getTime();
+    ReactDOM.render(<P/>, document.getElementById('container'));
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/babel">
+        var Page=React.createClass({
+            getInitialState:function(){
+                return {
+                    input:'input value',
+                    select:'A',
+                    radio:'B',
+                    checkbox:'C',
+                    textarea:'textarea value'
+                }
+            },
+
+            submitHandler:function(e){
+
+            },
+
+            inputChange:function(e){
+                this.setState({
+                   input:e.target.value
+                })
+            },
+
+            selectChange:function(e){
+                this.setState({
+                   select:e.target.value
+                })
+            },
+
+            textareaChange:function(e){
+                this.setState({
+                   textarea:e.target.value
+                })
+            },
+
+            render:function(){
+
+                return  (
+                    <form onSummit={this.submitHandler}>
+                        <p>input</p>
+                        <input type='text' value={this.state.input} onChange={this.inputChange}/>
+                        <p>select</p>
+                        <select value={this.state.select}  onChange={this.selectChange}>
+                            <option value='A'>A</option>
+                            <option value='B'>B</option>
+                            <option value='C'>C</option>
+                        </select>
+                        <p>radio</p>
+                        <input type='radio' name='radio' value='A' />
+                        <input type='radio' name='radio' value='B' defaultChecked/>
+                        <input type='radio' name='radio' value='C' />
+                        <p>checkbox</p>
+                        <input type='checkbox' value='A' />
+                        <input type='checkbox' value='B' />
+                        <input type='checkbox' value='C' defaultChecked/>
+                        <p>textarea</p>
+                        <textarea  value={this.state.textarea} onChange={this.textareaChange}/>
+
+                    </form>
+                )
+            }
+        })
+        var page=ReactDOM.render(<Page />,document.getElementById("content"));
+
+
+    </script>
+</body>
+</html>

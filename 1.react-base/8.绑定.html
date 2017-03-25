@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="bower_components/react/react.min.js"></script>
+    <script src="bower_components/react/react-dom.min.js"></script>
+    <script src="bower_components/react/react-with-addons.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+</head>
+<body>
+    <div id="content"></div>
+    <script type="text/babel">
+		var EasyForm = React.createClass({
+			mixins: [ React.addons.LinkedStateMixin ],
+			getInitialState:function(){
+				return {
+					message: 'React是否好用？',
+					awesome: true
+				}
+			},
+			render:function(){
+				return (
+                    <div>
+                        <div>{this.state.message}{this.state.awesome?'好用':'不好用'}</div>
+                        <input valueLink={this.linkState('message')} />
+                        <input type='checkbox' checkedLink={this.linkState('awesome')} />
+                        <SubComp message={this.linkState('message')} awesome={this.linkState('awesome')}/>
+                    </div>
+				)
+			}
+		});
+
+		var SubComp = React.createClass({
+			render:function(){
+				return (
+                    <SubSubComp {...this.props}/>
+				)
+			}
+		});
+
+		var SubSubComp = React.createClass({
+			render:function(){
+				return (
+				    <div>
+                        <input valueLink={this.props.message} />
+                        <input type='checkbox' checkedLink={this.props.awesome} />
+                    </div>
+				)
+			}
+		});
+		ReactDOM.render( <EasyForm />, document.getElementById('content') );
+    </script>
+</body>
+
+</html>
