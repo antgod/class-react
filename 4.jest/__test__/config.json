@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "jsx",
+    "json"
+  ],
+  "unmockedModulePathPatterns": [
+    "<rootDir>/node_modules/*",
+    "react",
+    "react-dom",
+    "react-addons-test-utils",
+    "node_modules/enzyme/"
+  ],
+  "modulePathIgnorePatterns": [],
+  "testPathIgnorePatterns": [
+    "/node_modules/"
+  ]
+}
